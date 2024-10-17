@@ -4,7 +4,7 @@
 
 Gere senhas com base em determinadas características selecionadas pelo usuário.
 
-O objetivo da criação desse projeto é ele faça parte do portfólio, demonstrando um nível de implementação Intermediário.
+O objetivo da criação desse projeto é que ele faça parte do portfólio, demonstrando um nível de implementação Intermediário.
 
 
 ## 🚀 Começando
