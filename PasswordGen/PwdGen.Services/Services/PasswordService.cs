@@ -9,7 +9,7 @@ namespace PwdGen.Services.Services
     {
         public PasswordDTO Generate(PasswordDTO passwordDTO)
         {
-            if (passwordDTO.Length <= 0)
+            if (!Validated(passwordDTO))
                 return passwordDTO;
 
             StringBuilder sb = new();
@@ -27,6 +27,26 @@ namespace PwdGen.Services.Services
             } while (!IncreaseSecurityIsValid(passwordDTO));
 
             return passwordDTO;
+        }
+
+        private static bool Validated(PasswordDTO passwordDTO)
+        {
+            var result = true;
+
+            if (passwordDTO.Length <= 0)
+                result = false;
+
+            var minLength = 0;
+            minLength += passwordDTO.IncludeLowercaseLetters ? 1 : 0;
+            minLength += passwordDTO.IncludeUppercaseLetters ? 1 : 0;
+            minLength += passwordDTO.IncludeNumbers ? 1 : 0;
+            minLength += passwordDTO.IncludeSymbols ? 1 : 0;
+            minLength = minLength == 0 ? 1 : minLength;
+
+            if (minLength > passwordDTO.Length)
+                result = false;
+
+            return result;
         }
 
         private static bool IncreaseSecurityIsValid(PasswordDTO passwordDTO)
