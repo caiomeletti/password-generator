@@ -1,5 +1,4 @@
-﻿using PwdGen.Core.Enums;
-using PwdGen.Services.DTO;
+﻿using PwdGen.Services.DTO;
 using PwdGen.Services.Services;
 using PwdGen.Services.Utilities;
 
@@ -28,6 +27,36 @@ namespace PwdGen.UnitTest.Services
             var result = _passwordService.Generate(passwordDTO);
 
             Assert.True(result.PasswordContent.Length >= 1);
+        }
+
+        [Fact(DisplayName = "O comprimento da senha deve acompanhar a quantidade de incrementos de segurança")]
+        public void LengthOfTheGeneratedPasswordShouldAccompanyTheNumberofSecurityIncreases()
+        {
+            PasswordDTO passwordDTO = new()
+            {
+                Length = 3,
+                IncludeUppercaseLetters = true,
+                IncludeLowercaseLetters = false,
+                IncludeNumbers = true,
+                IncludeSymbols = false,
+            };
+            var result = _passwordService.Generate(passwordDTO);
+            bool isUpper = ServiceUtil.ContainsAnyUppercaseLetter(result.PasswordContent);
+            bool isNumber = ServiceUtil.ContainsAnyNumbers(result.PasswordContent);
+
+            Assert.True(result.PasswordContent.Length == passwordDTO.Length && isUpper && isNumber);
+
+            passwordDTO = new()
+            {
+                Length = 2,
+                IncludeUppercaseLetters = true,
+                IncludeLowercaseLetters = true,
+                IncludeNumbers = true,
+                IncludeSymbols = false,
+            };
+            result = _passwordService.Generate(passwordDTO);
+
+            Assert.True(string.IsNullOrEmpty(result.PasswordContent));
         }
 
         [Fact(DisplayName = "O usuário pode selecionar o comprimento da senha gerada")]
