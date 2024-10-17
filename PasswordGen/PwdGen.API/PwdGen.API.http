@@ -1,0 +1,13 @@
+@PwdGen.API_HostAddress = http://localhost:5047
+
+POST {{PwdGen.API_HostAddress}}/api/v1/securities/passwords/
+Content-Type: application/json
+
+{
+  "length": 12,
+  "includeUppercaseLetters": true,
+  "includeLowercaseLetters": true,
+  "includeNumbers": true,
+  "includeSymbols": true
+}
+###
